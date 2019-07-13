@@ -229,6 +229,125 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/190713-Shapeless与CSV解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="pxsdirac">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/14/190713-Shapeless与CSV解析/" itemprop="url">代数数据类型和类型转换</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-14T00:29:05+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">import java.time.LocalDateTime</span><br><span class="line">import java.time.format.DateTimeFormatter</span><br><span class="line"></span><br><span class="line">import shapeless._</span><br><span class="line"></span><br><span class="line">import scala.util.&#123;Failure, Success, Try&#125;</span><br><span class="line">import scala.&#123;:: =&gt; Cons&#125;</span><br><span class="line"></span><br><span class="line">object ShapelessCSVParser extends App&#123;</span><br><span class="line">  trait ValueConverter[T]&#123;</span><br><span class="line">    def fromStr(string: String):Try[T]</span><br><span class="line">  &#125;</span><br><span class="line">  object ValueConverter&#123;</span><br><span class="line">    implicit def mkConverter[T](f: String =&gt; T):ValueConverter[T] = (string: String) =&gt; Try(f(string))</span><br><span class="line">    implicit val stringConverter: ValueConverter[String] = mkConverter(identity)</span><br><span class="line">    implicit val intConverter:ValueConverter[Int] = mkConverter(_.toInt)</span><br><span class="line">    implicit val doubleConverter: ValueConverter[Double] = mkConverter(_.toDouble)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  trait LineParser[T]&#123;</span><br><span class="line">    def parse(strList:List[String]):Try[T]</span><br><span class="line">  &#125;</span><br><span class="line">  object LineParser&#123;</span><br><span class="line">    implicit def hNilParser:LineParser[HNil] = strList =&gt; strList match &#123;</span><br><span class="line">      case Nil =&gt; Success(HNil)</span><br><span class="line">      case _ =&gt; Failure(new Exception(&quot;expected empty list, but actually is nonEmpty&quot;))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    implicit def hListParser[H,T &lt;: HList](implicit hParser:LineParser[H],tParser:LineParser[T]):LineParser[H::T] = strList =&gt; strList match &#123;</span><br><span class="line">      case Cons(head,tail) =&gt;</span><br><span class="line">        for &#123;</span><br><span class="line">          headResult &lt;- hParser.parse(List(head))</span><br><span class="line">          tailResult &lt;- tParser.parse(tail)</span><br><span class="line">        &#125; yield &#123;</span><br><span class="line">          headResult :: tailResult</span><br><span class="line">        &#125;</span><br><span class="line">      case Nil =&gt; Failure(new Exception(&quot;expected nonEmpty list, but actually is empty&quot;))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    implicit def genericParser[A,R](implicit gen:Generic.Aux[A,R],rParser:LineParser[R]):LineParser[A] = strList =&gt;&#123;</span><br><span class="line">      val rTry = rParser.parse(strList)</span><br><span class="line">      rTry.map(r =&gt; gen.from(r))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    implicit def mkParser[T](implicit strConverter:ValueConverter[T]):LineParser[T] = strList =&gt; strList match &#123;</span><br><span class="line">      case Cons(elem,Nil) =&gt; strConverter.fromStr(elem)</span><br><span class="line">      case _ =&gt; Failure(new Exception(&quot;expect str, but actually is list&quot;))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">  object CSVReader&#123;</span><br><span class="line">    def read[T](line:String)(implicit lineParser: LineParser[T]):Try[T] = lineParser.parse(line.split(&quot;,&quot;).toList) //忽略逗号在字符串内部，这不是本文所关心的重点</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  val line = &quot;a,1,2.0,2000-01-01 00:00:00&quot;</span><br><span class="line">  case class Test(a:String,b:Int,c:Double,d:LocalDateTime)</span><br><span class="line">  val dateTimeFormatter = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd HH:mm:ss&quot;)</span><br><span class="line">  implicit val dateTimeConverter: ValueConverter[LocalDateTime] = ValueConverter.mkConverter&#123;str =&gt;</span><br><span class="line">    LocalDateTime.parse(str,dateTimeFormatter)</span><br><span class="line">  &#125;</span><br><span class="line">  CSVReader.read[Test](line) match &#123;</span><br><span class="line">    case Success(value) =&gt; println(value)</span><br><span class="line">    case Failure(exception) =&gt; println(exception.getMessage)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/190713-代数数据类型和类型转换/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -301,13 +420,15 @@
         
           
             <h2 id="代数数据类型-Algebraic-Data-Types-ADT"><a href="#代数数据类型-Algebraic-Data-Types-ADT" class="headerlink" title="代数数据类型(Algebraic Data Types - ADT)"></a>代数数据类型(Algebraic Data Types - ADT)</h2><p>ADT这个词很久之前便已知晓，脑中也有个大概的概念，但是一直不是特别清楚。晚上再次在书中看到这个词，便去仔细理解了这个概念的细节。<br>虽然名字很抽象，但是还是比较好理解的。简单来说，就是Product和Coproduct。本文中的描述仅为个人理解的通俗表述，没有数学上的严谨性，但是对于理解问题和相关的概念应该是多少有些帮助的。</p>
-<p>Product其实就是笛卡尔积，用scala里的概念就是case class和tuple等scala.Product其实就是笛卡尔积，用scala里的概念就是case class和tuple等。</p>
+<p>Product其实就是笛卡尔积，用scala里的概念就是case class和tuple等.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">case class Person(name:String,id:Int,birthday:Instant)</span><br><span class="line">type Circle = (Double,Double) // 圆心和半径</span><br></pre></td></tr></table></figure>
 
 <p>Coproduct数学上的含义还没有完全搞清楚，但是在类型系统上，指的是某个类型是集中不同类型的集合，其这些类型各不相交。比较典型且极端的例子是枚举，枚举类型是各个枚举变量的集合，且每个枚举变量都只有唯一的值，没有相交部分。另外一个在scala中的coproduct是sealed trait</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">object Gender extends Enumaration&#123;</span><br><span class="line">    type Gender = Value</span><br><span class="line">    val Male = Value(&quot;male&quot;)</span><br><span class="line">    val Female = Value(&quot;Female&quot;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sealed trait Either[+L,+R]</span><br><span class="line">case class Left[+L,+R](value:L) extends Either[L,R]</span><br><span class="line">case class Right[+L,+R](value:R) extends Either[L,R]</span><br></pre></td></tr></table></figure>
 
-<p>由Product和Coproduct，我们便可以知道一个类型及其子类的所有信息。因此，便可以在模式匹配中去匹配该类所有的可能。</p>
+<p>通过Product和Coproduct的组合，我们便可以得到一个复杂的类型，但是我们任然可以知道这个类型及其子类的所有信息。因此，便可以在模式匹配中去匹配该类所有的可能。<br>比如上面的Either,Left和Right都是一个Product，而Either是一个Left和Right中的其中一个值，但不能同时是两者。我们可以很轻松的进行模式匹配:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">val either:Either[String,Int] = ...</span><br><span class="line">either match &#123;</span><br><span class="line">    case Left(strValue) =&gt; println(strValue)</span><br><span class="line">    case Right(intValue) =&gt; println(intValue)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="强制-类型转换"><a href="#强制-类型转换" class="headerlink" title="(强制)类型转换"></a>(强制)类型转换</h2><p>很多编程语言中，都有强制类型转换的概念，在获取到父类的实例的时候，我们可以通过强制类型转换，将其转换成子类行进行使用。<br>Java中在实例前的括号中加上需要转换的目的类名，scala中也有asInstanceOf用来进行类型转换。<br>类型转换具有很强的不安全性，因为我们对父类型所知道的信息不全，不足以进行这样的转换。</p>
 <p>了解ADT之后，我的一个想法是，我们不应该对ADT之外的任何类使用类型转换，在scala中，对于ADT，应该使用模式匹配对其所有可能的值进行匹配(在这里，模式匹配也应该被认为是一种类型转换，只是可能没有那么强制罢了)。<br>ADT之所以例外，是因为我们知道这个类的所有可能。</p>
 <p>我们可以写这样的代码:</p>
@@ -398,7 +519,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
