@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang>
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -86,8 +86,8 @@
 <meta property="og:url" content="http://yoursite.com/2019/07/13/190713-代数数据类型和类型转换/index.html">
 <meta property="og:site_name" content="pxsdirac">
 <meta property="og:description" content="代数数据类型(Algebraic Data Types - ADT)ADT这个词很久之前便已知晓，脑中也有个大概的概念，但是一直不是特别清楚。晚上再次在书中看到这个词，便去仔细理解了这个概念的细节。虽然名字很抽象，但是还是比较好理解的。简单来说，就是Product和Coproduct。本文中的描述仅为个人理解的通俗表述，没有数学上的严谨性，但是对于理解问题和相关的概念应该是多少有些帮助的。 Pro">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-13T16:54:13.775Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-14T02:08:16.152Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="代数数据类型和类型转换">
 <meta name="twitter:description" content="代数数据类型(Algebraic Data Types - ADT)ADT这个词很久之前便已知晓，脑中也有个大概的概念，但是一直不是特别清楚。晚上再次在书中看到这个词，便去仔细理解了这个概念的细节。虽然名字很抽象，但是还是比较好理解的。简单来说，就是Product和Coproduct。本文中的描述仅为个人理解的通俗表述，没有数学上的严谨性，但是对于理解问题和相关的概念应该是多少有些帮助的。 Pro">
@@ -106,7 +106,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -138,7 +138,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -184,9 +184,39 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-首页"></i> <br>
             
-            Home
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-分类"></i> <br>
+            
+            分类
           </a>
         </li>
       
@@ -194,9 +224,9 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-归档"></i> <br>
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -236,7 +266,7 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/190713-代数数据类型和类型转换/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="pxsdirac">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -260,9 +290,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-13T22:43:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-13T22:43:02+08:00">
                 2019-07-13
               </time>
             
@@ -300,7 +330,7 @@
       
 
       
-        <h2 id="代数数据类型-Algebraic-Data-Types-ADT"><a href="#代数数据类型-Algebraic-Data-Types-ADT" class="headerlink" title="代数数据类型(Algebraic Data Types - ADT)"></a>代数数据类型(Algebraic Data Types - ADT)</h2><p>ADT这个词很久之前便已知晓，脑中也有个大概的概念，但是一直不是特别清楚。晚上再次在书中看到这个词，便去仔细理解了这个概念的细节。<br>虽然名字很抽象，但是还是比较好理解的。简单来说，就是Product和Coproduct。本文中的描述仅为个人理解的通俗表述，没有数学上的严谨性，但是对于理解问题和相关的概念应该是多少有些帮助的。</p>
+        <h2 id="代数数据类型-Algebraic-Data-Types-ADT"><a href="#代数数据类型-Algebraic-Data-Types-ADT" class="headerlink" title="代数数据类型(Algebraic Data Types - ADT)"></a>代数数据类型(Algebraic Data Types - ADT)</h2><p>ADT这个词很久之前便已知晓，脑中也有个大概的概念，但是一直不是特别清楚。晚上再次在书中看到这个词，便去仔细理解了这个概念的细节。<br>虽然名字很抽象，但是还是比较好理解的。简单来说，就是Product和Coproduct。<br>本文中的描述仅为个人理解的通俗表述，没有数学上的严谨性，但是对于理解问题和相关的概念应该是多少有些帮助的。</p>
 <p>Product其实就是笛卡尔积，用scala里的概念就是case class和tuple等.</p>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span>(<span class="params">name:<span class="type">String</span>,id:<span class="type">Int</span>,birthday:<span class="type">Instant</span></span>)</span></span><br><span class="line"><span class="class"><span class="title">type</span> <span class="title">Circle</span> </span>= (<span class="type">Double</span>,<span class="type">Double</span>) <span class="comment">// 圆心和半径</span></span><br></pre></td></tr></table></figure>
 
@@ -316,7 +346,7 @@
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> a:<span class="type">Try</span>[<span class="type">Int</span>] = <span class="type">Try</span>(<span class="number">1</span> / <span class="number">0</span>)</span><br><span class="line">a <span class="keyword">match</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Success</span>(value) =&gt; println(value)</span><br><span class="line">    <span class="keyword">case</span> <span class="type">Failure</span>(exception) =&gt; exception.printStackTrace()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>但是我们不应该写出下面的代码:</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">abtract <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">name</span></span>:<span class="type">String</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>(<span class="params">val name:<span class="type">String</span></span>) <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">person</span></span>:<span class="type">Person</span> = getPerson()</span><br><span class="line"><span class="keyword">if</span> (person.isInstanceOf[<span class="type">Student</span>])&#123;</span><br><span class="line">   <span class="keyword">val</span> student:<span class="type">Student</span> = person.asInstanceOf[<span class="type">Student</span>]</span><br><span class="line">   ... </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//模式匹配同理</span></span><br><span class="line">person <span class="keyword">match</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> p:<span class="type">Person</span> =&gt; ...</span><br><span class="line">    <span class="keyword">case</span> _ =&gt; ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">name</span></span>:<span class="type">String</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>(<span class="params">val name:<span class="type">String</span></span>) <span class="keyword">extends</span> <span class="title">Person</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">person</span></span>:<span class="type">Person</span> = getPerson()</span><br><span class="line"><span class="keyword">if</span> (person.isInstanceOf[<span class="type">Student</span>])&#123;</span><br><span class="line">   <span class="keyword">val</span> student:<span class="type">Student</span> = person.asInstanceOf[<span class="type">Student</span>]</span><br><span class="line">   ... </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//模式匹配同理</span></span><br><span class="line">person <span class="keyword">match</span> &#123;</span><br><span class="line">    <span class="keyword">case</span> p:<span class="type">Person</span> =&gt; ...</span><br><span class="line">    <span class="keyword">case</span> _ =&gt; ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>父类的作用是帮助我们抽象某个类型的共有行为，如果需要进入到子类内部去窥探，那么一定意味着我们在这个地方是不应该使用父类的，应该去反思上游的代码，而不是在这里使用类型转换去获得子类的实例。</p>
 
@@ -328,6 +358,35 @@
 
     
 
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://raw.githubusercontent.com/pxsdirac/resources/master/wechat.jpg" alt="pxsdirac 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://raw.githubusercontent.com/pxsdirac/resources/master/alipay.jpg" alt="pxsdirac 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
     
 
     
@@ -415,10 +474,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -427,7 +486,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">pxsdirac</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -439,7 +498,7 @@
                 <a href="/archives/">
               
                   <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
@@ -452,7 +511,7 @@
               <div class="site-state-item site-state-tags">
                 
                   <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-name">标签</span>
                 
               </div>
             
@@ -508,13 +567,13 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">pxsdirac</span>
 
   
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -522,7 +581,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
@@ -531,6 +590,15 @@
 
 
 
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66451320";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
